@@ -32,7 +32,7 @@ export class PerfilComponent implements OnInit {
             const {nombre, email} = this.profileForm.value;
             this.usuario.nombre=nombre;
             this.usuario.email=email;
-            Swal.fire('Guardado', 'Cambios fueron guardados', 'success');
+            Swal.fire('Guardado', 'Los cambios fueron guardados', 'success');
           }, (err) => {
             Swal.fire('Error', err.error.msg, 'error');
           });
