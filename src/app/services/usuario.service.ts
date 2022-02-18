@@ -1,11 +1,12 @@
 import { Injectable, NgZone } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { tap, map, Observable, catchError, of } from 'rxjs';
+import { tap, map, Observable, catchError, of, delay } from 'rxjs';
 import { RegisterForm } from '../interfaces/register-form.interface';
 import { loginForm } from '../interfaces/login-form.interface';
 import { Router } from '@angular/router';
 import { Usuario } from '../models/usuario.model';
+import { CargarUsuario } from '../interfaces/cargar-usuarios.interface';
 
 const base_url = environment.base_url;
 declare const gapi:any;
@@ -28,6 +29,13 @@ export class UsuarioService {
     }
     get uid():string{
         return this.usuario.uid || '';
+    }
+    get headers(){
+        return {
+            headers:{
+                'x-token':this.token
+            }
+        }
     }
     googleInit(){
         return new Promise<void>(resolve=>{
@@ -102,5 +110,20 @@ export class UsuarioService {
                             localStorage.setItem('token', resp.token )
                         })
                     )
+    }
+    cargarUsuarios( desde:number = 0){
+        return this.http.get<CargarUsuario>(`${base_url}/usuarios?desde=${desde}`, this.headers)
+                .pipe(
+                    //delay(2000),
+                    map(resp=>{
+                        const usuarios = resp.usuarios.map(
+                            user => new Usuario(user.nombre, user.email,'',user.img, user.google,user.role,user.uid))
+                        return {
+                            total: resp.total,
+                            usuarios
+                        }
+                    })
+                )
+
     }
 }
