@@ -52,10 +52,10 @@
                                 <td>{{usuario.nombre}}</td>
                                 <td>
                                     <select class="form-control"
-                                            [(ngModel)]="usuario.rol"
+                                            [(ngModel)]="usuario.role"
                                             (change)="cambiarRole(usuario)" >
-                                        <option [ngValue]="ADMIN_ROLE">Admin</option>
-                                        <option [ngValue]="USER_ROLE">User</option>
+                                        <option value="ADMIN_ROLE">Admin</option>
+                                        <option value="USER_ROLE">User</option>
                                     </select>
                                 </td>
                                 <td>
