@@ -21,7 +21,7 @@ export class MedicoComponent implements OnInit {
   public medicoForm!: FormGroup;
   public hospitales: Hospital[] = [];
   
-  public medicoSeleccionado?: Medico;
+  public medicoSeleccionado!: Medico;
   public hospitalSeleccionado?: Hospital;
 
 
@@ -65,7 +65,7 @@ export class MedicoComponent implements OnInit {
           return this.router.navigateByUrl(`/dashboard/medicos`);
         }
 
-        const {nombre, hospital: _id} = medico;  
+        const {nombre, hospital._id} = medico;  
         this.medicoSeleccionado = medico;
         this.medicoForm.setValue({ nombre, hospital: _id });
         return
@@ -103,7 +103,7 @@ export class MedicoComponent implements OnInit {
       this.medicoService.crearMedico( this.medicoForm.value )
           .subscribe( (resp: any) => {
             Swal.fire('Creado', `${ nombre } creado correctamente`, 'success');
-            this.router.navigateByUrl(`/dashboard/medico/${ resp.medico._id }`)
+            this.router.navigateByUrl(`/dashboard/medicos/${ resp.medico._id }`)
         })
     }
 
