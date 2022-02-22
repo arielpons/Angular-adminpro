@@ -39,11 +39,11 @@
                         <div class="col-sm-9">
                             <div class="input-group">
                                 <select class="form-control"
-                                        formControlName="hospital"
-                                        [(ngModel)]="idHospital" > 
+                                        formControlName="hospital">
                                     <option value="">Seleccione Hospital</option>
                                     <option *ngFor="let hospital of hospitales"
-                                        [ngValue]="hospital._id">
+                                        [value]="hospital._id"
+                                        >
                                         {{ hospital.nombre }}
                                     </option>
                                 </select>
