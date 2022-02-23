@@ -59,8 +59,8 @@ export class HospitalesComponent implements OnInit,OnDestroy {
   eliminarHospital(hospital:Hospital){
     this.hospitalService.borrarHospital(hospital._id!)
         .subscribe(resp=>{
-          this.cargarHospitales;
           Swal.fire('Borrado', hospital.nombre, 'success')
+          this.cargarHospitales();
         })
   }
 

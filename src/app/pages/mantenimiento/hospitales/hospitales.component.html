@@ -1,16 +1,17 @@
-<div class="row animated fadeIn fast" *ngIf="cargando" >
+<div class="row animated fadeIn fast"  >
     <div class="col-12">
         <div class="card">
-            <div class="card-body"></div>
+            <div class="card-body">
             <input type="text" 
                     class="form-control"
                     placeholder="Buscar hospital..."
                     (keyup)="buscar(txtTermino.value)"
                     #txtTermino/>
+            </div>
         </div>
     </div>
 </div>
-<div class="row animated fadeIn fast">
+<div class="row animated fadeIn fast" *ngIf="cargando">
     <div class="col-12">
         <div class="alert alert-info text-center">
             <h4 class="alert-heading">Cargando</h4>
@@ -30,7 +31,8 @@
                     </div>
                     <div class="col">
                         <div class="text-right">
-                            <button class="btn btn-priamry">
+                            <button class="btn btn-primary"
+                                    (click)="abrirSweetAlert()" >
                                 <i class="fa fa-hospital-o"></i>
                                 Crear hospital
                             </button>
@@ -50,9 +52,9 @@
                             <tr *ngFor="let hospital of hospitales">
                                 <td class="text-center">
                                     <img [src]="hospital.img |imagen:'hospitales'"
-                                            [alt]="hospita.nombre"
+                                            [alt]="hospital.nombre"
                                             class="w100 cursor" 
-                                            (click)="abrirModal(usuario)" >
+                                            (click)="abrirModal(hospital)" >
                                 </td>
                                 <td>
                                     <input type="text"

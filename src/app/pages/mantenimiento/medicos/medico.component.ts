@@ -21,10 +21,10 @@ export class MedicoComponent implements OnInit {
   public medicoForm!: FormGroup;
   public hospitales: Hospital[] = [];
   
-  public medicoSeleccionado?: Medico;
+  public medicoSeleccionado!: Medico;
   public hospitalSeleccionado?: Hospital;
 
-  public idHospital:string = '';
+
 
   constructor( private fb: FormBuilder,
                private hospitalService: HospitalService,
@@ -64,13 +64,10 @@ export class MedicoComponent implements OnInit {
         if ( !medico ) {
           return this.router.navigateByUrl(`/dashboard/medicos`);
         }
-        const id = medico._id;
         const nombre = medico.nombre;  
-        if (medico._id != undefined){
-          this.idHospital = medico._id ;  
-        }
+        const hospitalId = medico.hospital?._id;
         this.medicoSeleccionado = medico;
-        this.medicoForm.setValue({ nombre, id });
+        this.medicoForm.setValue({ nombre, hospital: hospitalId });
         return
       });
 
@@ -93,7 +90,7 @@ export class MedicoComponent implements OnInit {
       // actualizar
       const data = {
         ...this.medicoForm.value,
-        _id: this.idHospital
+        _id: this.medicoSeleccionado._id
       }
       this.medicoService.actualizarMedico( data )
         .subscribe( resp => {
@@ -106,7 +103,7 @@ export class MedicoComponent implements OnInit {
       this.medicoService.crearMedico( this.medicoForm.value )
           .subscribe( (resp: any) => {
             Swal.fire('Creado', `${ nombre } creado correctamente`, 'success');
-            this.router.navigateByUrl(`/dashboard/medico/${ resp.medico._id }`)
+            this.router.navigateByUrl(`/dashboard/medicos/${ resp.medico._id }`)
         })
     }
 
